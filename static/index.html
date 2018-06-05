@@ -2,53 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
-    <script src="io.js"></script>
-    <script src="jquery.js"></script>
-    <script src="three.js"></script>
-    <script src="OrbitControls.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+  <script src="io.js"></script>
+  <script src="jquery.js"></script>
+  <script src="three.js"></script>
+  <script src="OrbitControls.js"></script>
 
-    <script src="Main.js"></script>
-    <script src="Net.js"></script>
-    <script src="Game.js"></script>
-    <script src="Kula.js"></script>
-    <script src="Armata.js"></script>
-    <script src="Cegla.js"></script>
-    <script src="Plansza.js"></script>
+  <script src="Main.js"></script>
+  <script src="Net.js"></script>
+  <script src="Game.js"></script>
+  <script src="Kula.js"></script>
+  <script src="Armata.js"></script>
+  <script src="Cegla.js"></script>
+  <script src="Plansza.js"></script>
+  <script>
+    var game;
 
-    <style>
-        #panel {
-            position: absolute;
-            top: 0px;
-            left: 10%;
-            z-index: 20;
-        }
+    $(document).ready(function() {
+      game = new Game();
+    })
+  </script>
 
-        * {
-            margin: 0;
-            overflow: hidden;
-        }
+  <style>
+    #panel {
+      position: absolute;
+      top: 0px;
+      left: 10%;
+      z-index: 20;
+    }
 
-        #wait {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: red;
-        }
-    </style>
-    <title>Document</title>
+    * {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    #wait {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: red;
+    }
+  </style>
+  <title>Document</title>
 </head>
 
 <body>
-    <div id="wait"></div>
-    <div id="root"></div>
-    
+  <!-- <div id="wait"></div> -->
+  <div id="root"></div>
+
 
 
 </body>
