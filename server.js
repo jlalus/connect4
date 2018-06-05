@@ -1,7 +1,7 @@
 var http = require("http");
 var fs = require("fs");
 var qs = require("querystring")
-var socketio = require("socket.io")
+//var socketio = require("socket.io")
 var ilu = 0;
 var server = http.createServer(function (req, res) {
 
@@ -107,23 +107,23 @@ server.listen(3000, function () {
     console.log("serwer startuje na porcie 3000")
 
 });
-var io = socketio.listen(server)
-io.sockets.on("connection", function (client) {
-    ilu++;
-    if (ilu == 1) {
-        client.emit("onconnect", {
-            stan: "wait",
-        })
-    }
-    client.on("disconnect", function () {
-        ilu--;
-        if(ilu <2)
-        io.sockets.emit("usun", { "usun":true });
-    })
-    if (ilu == 2) {
-        client.emit("onconnect", {
-            stan: "play",
-        })
-    }
-    
-})
+// var io = socketio.listen(server)
+// io.sockets.on("connection", function (client) {
+//     ilu++;
+//     if (ilu == 1) {
+//         client.emit("onconnect", {
+//             stan: "wait",
+//         })
+//     }
+//     client.on("disconnect", function () {
+//         ilu--;
+//         if(ilu <2)
+//         io.sockets.emit("usun", { "usun":true });
+//     })
+//     if (ilu == 2) {
+//         client.emit("onconnect", {
+//             stan: "play",
+//         })
+//     }
+//
+// })
