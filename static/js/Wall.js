@@ -15,6 +15,9 @@ function Wall() {
 
       wall.scale.set(7, 7, 7)
 
+      var box = new THREE.Box3().setFromObject(wall);
+
+      console.log(box.min, box.max, box.size());
 
       // zwrócenie kontenera
 

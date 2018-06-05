@@ -27,16 +27,21 @@ function Game() {
 
 
 
-  var plansza = new Plansza;
+  //var plansza = new Plansza;
   var axes = new THREE.AxesHelper(1000)
   scene.add(axes)
-  scene.add(plansza.getPlane())
+  //scene.add(plansza.getPlane())
 
 var chip = new Chip;
 scene.add(chip.getChip())
 
 var wall = new Wall;;
 wall.loadModel(function(data) {
+scene.add(data)
+})
+
+var plansza = new Plansza;;
+plansza.loadModel(function(data) {
 scene.add(data)
 })
 

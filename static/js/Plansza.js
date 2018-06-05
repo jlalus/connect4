@@ -1,25 +1,27 @@
-function Plansza()
-{
+function Plansza() {
 
-    var geometry = new THREE.PlaneGeometry(100, 100, 10, 10)
-    geometry.rotateX(Math.PI / 2);
+  this.loadModel = function(callback) {
 
-    var material = new THREE.MeshBasicMaterial({
-      color: "brown",
-      side: THREE.DoubleSide,
-      map: new THREE.TextureLoader().load('img/wood.jpg'),
-      side: THREE.DoubleSide,
-    //  wireframe: true,
-      transparent: true,
-      opacity: 0.5
+    var loader = new THREE.ObjectLoader();
+
+
+    loader.load('model/table.json', function(obj) {
+
+obj.rotateY(Math.PI/2)
+obj.scale.set(5,5,5)
+obj.position.set(-10,-158,-150)
+
+///test
+
+var box = new THREE.Box3().setFromObject(obj);
+
+console.log(box.min, box.max, box.size());
+      // zwrócenie kontenera
+
+      var axes = new THREE.AxesHelper(1000)
+      obj.add(axes)
+      callback(obj);
+
     });
-
-    var plansza = new THREE.Mesh(geometry, material);
-    //  plansza.receiveShadow = true;
-
-
-
-    this.getPlane = function(){
-        return plansza
-    }
+  }
 }
