@@ -1,14 +1,25 @@
 function Plansza()
 {
-    var plansza = new THREE.BoxGeometry(20000, 1, 20000,10,10,10)
+
+    var geometry = new THREE.PlaneGeometry(100, 100, 10, 10)
+    geometry.rotateX(Math.PI / 2);
+
     var material = new THREE.MeshBasicMaterial({
-        wireframe: false,
-        color: "grey",
+      color: "brown",
+      side: THREE.DoubleSide,
+      map: new THREE.TextureLoader().load('img/wood.jpg'),
+      side: THREE.DoubleSide,
+    //  wireframe: true,
+      transparent: true,
+      opacity: 0.5
     });
-    var plane = new THREE.Mesh(plansza, material);
+
+    var plansza = new THREE.Mesh(geometry, material);
+    //  plansza.receiveShadow = true;
+
 
 
     this.getPlane = function(){
-        return plane
+        return plansza
     }
 }

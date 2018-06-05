@@ -1,106 +1,23 @@
 var http = require("http");
 var fs = require("fs");
+var express = require("express")
+var app = express()
 var qs = require("querystring")
 //var socketio = require("socket.io")
-var ilu = 0;
-var server = http.createServer(function(req, res) {
 
-  switch (req.method) {
-    case "GET":
-      if (req.url === "/") {
-        fs.readFile("static/index.html", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'text/html'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/jquery.js") {
-        fs.readFile("static/libs/jquery.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/three.js") {
-        fs.readFile("static/libs/three.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/io.js") {
-        fs.readFile("static/libs/io.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/Game.js") {
-        fs.readFile("static/js/Game.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/Chip.js") {
-        fs.readFile("static/js/Chip.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/Wall.js") {
-        fs.readFile("static/js/Wall.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/OrbitControls.js") {
-        fs.readFile("static/libs/OrbitControls.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/Plansza.js") {
-        fs.readFile("static/js/Plansza.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      } else if (req.url === "/Net.js") {
-        fs.readFile("static/js/Net.js", function(error, data) {
-          res.writeHead(200, {
-            'Content-Type': 'application/javascript'
-          });
-          res.write(data);
-          res.end();
-        })
-      }
+app.use(express.static('static'))
 
-      break;
-    case "POST":
-      servres(req, res)
-      break;
-  }
+var path = require("path")
 
-
-
+app.get("/", function (req, res) {
+    console.log(__dirname)
+    res.sendFile(path.join(__dirname + "/static/index.html"))
 
 })
 
-server.listen(3000, function() {
+
+
+app.listen(3000, function() {
   console.log("serwer startuje na porcie 3000")
 
 });
