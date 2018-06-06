@@ -8,7 +8,7 @@ function Chip() {
     chip.name = "CHIP"
     chip.rotateX(Math.PI/2)
     chip.rotateZ(Math.PI/2)
-
+chip.position.set(0,65,0)
     var axes = new THREE.AxesHelper(100)
     chip.add(axes)
 
