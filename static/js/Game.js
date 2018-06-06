@@ -32,21 +32,21 @@ function Game() {
   scene.add(axes)
   //scene.add(plansza.getPlane())
 
-var chip = new Chip;
+var chip = new Chip();
 scene.add(chip.getChip())
 
-var wall = new Wall;;
+var wall = new Wall();
 wall.loadModel(function(data) {
 scene.add(data)
 })
 
-var plansza = new Plansza;;
+var plansza = new Plansza();
 plansza.loadModel(function(data) {
 scene.add(data)
+
 })
 
-
-  camera.position.set(80, 100, 80)
+  camera.position.set(80, 200, 80)
   camera.lookAt(scene.position)
 
 

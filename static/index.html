@@ -11,43 +11,22 @@
   <script src="libs/three.js"></script>
   <script src="libs/OrbitControls.js"></script>
   <script src="js/Net.js"></script>
-  <script src="js/Game.js"></script>
+  <script scr="js/Ui.js"></script>
   <script src="js/Wall.js"></script>
   <script src="js/Chip.js"></script>
   <script src="js/Plansza.js"></script>
+  <script src="js/Game.js"></script>
 
-  </script>
   <script>
     var game;
-
+var ui;
     $(document).ready(function() {
       game = new Game();
+      ui = new Ui();
     })
   </script>
 
-  <style>
-    #panel {
-      position: absolute;
-      top: 0px;
-      left: 10%;
-      z-index: 20;
-    }
 
-    * {
-      margin: 0;
-      overflow: hidden;
-    }
-
-    #wait {
-      display: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: red;
-    }
-  </style>
   <title>Document</title>
 </head>
 
