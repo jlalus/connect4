@@ -1,4 +1,5 @@
 function Chip() {
+
     var geometry = new THREE.CylinderGeometry( 3.4, 3.4, 1, 32 );
     var material = new THREE.MeshBasicMaterial({
         // wireframe: true,
@@ -8,11 +9,13 @@ function Chip() {
     chip.name = "CHIP"
     chip.rotateX(Math.PI/2)
     chip.rotateZ(Math.PI/2)
-chip.position.set(0,65,0)
-    var axes = new THREE.AxesHelper(100)
+chip.position.set(0,63,0)
+    var axes = new THREE.AxesHelper(10)
     chip.add(axes)
 
     this.getChip = function () {
+
         return chip;
     }
+  
 }

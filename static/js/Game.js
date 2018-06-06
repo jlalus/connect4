@@ -19,43 +19,61 @@ function Game() {
   renderer.setSize($(window).width(), $(window).height());
   $("#root").append(renderer.domElement);
 
-//=============OrbitControls
+  //=============OrbitControls
   var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-  orbitControl.addEventListener('change', function () {
-      renderer.render(scene, camera)
+  orbitControl.addEventListener('change', function() {
+    renderer.render(scene, camera)
   });
-
-
 
   var axes = new THREE.AxesHelper(1000)
   scene.add(axes)
 
 
-var chip = new Chip();
-scene.add(chip.getChip())
+  var chip = new Chip();
+  scene.add(chip.getChip())
 
-var wall = new Wall();
-wall.loadModel(function(data) {
-scene.add(data)
-})
+  var wall = new Wall();
+  wall.loadModel(function(data) {
+    scene.add(data)
+  })
 
-var plansza = new Plansza();
-plansza.loadModel(function(data) {
-scene.add(data)
+  var plansza = new Plansza();
+  plansza.loadModel(function(data) {
+    scene.add(data)
 
-})
-var stars = new Stars();
-scene.add(stars.getStar())
+  })
+  var stars = new Stars();
+  scene.add(stars.getStar())
 
 
   camera.position.set(80, 200, 80)
   camera.lookAt(scene.position)
 
 
+  var ui = new Ui();
+
+  $(document).keydown(function(e) {
+
+    if(e.which==65){
+  console.log("LEFT");
+  chip.getChip().position.z+=7
+    }
+    if(e.which==68){
+    console.log("RIGHT");
+    chip.getChip().position.z-=7
+    }
+    if(e.which==32){
+      chip.getChip().position.y-=7
+
+    }
+
+  })
 
 
+//65 68
 
   function render() {
+
 
 
     requestAnimationFrame(render);

@@ -13,7 +13,7 @@ for(var i=0;i<7;i++){
   star.name = "CHIP"
   star.rotateX(Math.PI/2)
   star.rotateZ(Math.PI/2)
- star.position.set(0,65,7*i-21)
+ star.position.set(0,49+14,7*i-21)
   var axes = new THREE.AxesHelper(100)
   star.add(axes)
 
