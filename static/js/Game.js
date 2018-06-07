@@ -22,14 +22,14 @@ function Game() {
   //========ZMIENNE
   var settings = new Settings();
 
-  //=============OrbitControls
-//  var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-//  orbitControl.addEventListener('change', function() {
-//    renderer.render(scene, camera)
-//  });
+//  =============OrbitControls
+ var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
+ orbitControl.addEventListener('change', function() {
+   renderer.render(scene, camera)
+ });
 
-  var axes = new THREE.AxesHelper(1000)
-  scene.add(axes)
+  //var axes = new THREE.AxesHelper(1000)
+  //scene.add(axes)
 
 
   var chip = new Chip();
@@ -144,7 +144,7 @@ var alfa=0
 
     requestAnimationFrame(render);
 
-  
+
 
 
 

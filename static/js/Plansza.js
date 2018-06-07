@@ -18,8 +18,8 @@ var box = new THREE.Box3().setFromObject(obj);
 console.log(box.min, box.max, box.size());
       // zwrócenie kontenera
 
-      var axes = new THREE.AxesHelper(1000)
-      obj.add(axes)
+  //    var axes = new THREE.AxesHelper(1000)
+    //  obj.add(axes)
       callback(obj);
 
     });
