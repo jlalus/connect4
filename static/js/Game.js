@@ -22,7 +22,7 @@ function Game() {
   //========ZMIENNE
 
   var move = false;
-
+  var gravity = 1;
 
   var tab_wall = [
     [0, 0, 0, 0, 0, 0, 0],
@@ -60,7 +60,7 @@ function Game() {
   scene.add(stars.getStar())
 
 
-  camera.position.set(80, 200, 80)
+  camera.position.set(200, 100, 0)
   camera.lookAt(scene.position)
 
 
@@ -95,57 +95,61 @@ function Game() {
 
     if (move) {
 
-      tempY = (6 - Math.floor((chip.getChip().position.y - 15) / 7)) - 1
-      tempX = (chip.getChip().position.z / 7) + 3
+      tempY = (6 - Math.floor((chip.getChip().position.y - 16) / 7)) - 1
+      tempX = Math.floor(chip.getChip().position.z / 7) + 3
 
 
-    console.log(tempY, tempX);
-    chip.getChip().translateZ(0.7)
-    if (tempY > 0) {
+      console.log(tempY, tempX);
+      chip.getChip().translateZ(1)
 
-      if (tempY < tab_wall.length) {
-        if (tab_wall[tempY][tempX] != 0) {
-          // Jeśli coś jest
+      if (tempY > 0) {
 
-          tab_wall[tempY - 1][tempX] = chip.getChip().name
-          console.log(tab_wall)
+        if (tempY < tab_wall.length) {
+          if (tab_wall[tempY][tempX] != 0) {
+            // Jeśli coś jest
+
+            tab_wall[tempY - 1][tempX] = chip.getChip().name
+            console.log(tab_wall)
+            move = false
+            tab_wall[tempY - 1][tempX] = chip.getChip().name
+            console.log(tab_wall)
+            console.log("STOP KOLIZJA")
+            chip = new Chip();
+            scene.add(chip.getChip())
+
+
+          } else {
+
+
+          }
+
+        } else {
           move = false
           tab_wall[tempY - 1][tempX] = chip.getChip().name
           console.log(tab_wall)
-          console.log("STOP KOLIZJA")
-
-
-
-        } else {
-
+          console.log("STOP DOL")
+          chip = new Chip();
+          scene.add(chip.getChip())
 
         }
 
       } else {
-        move = false
-        tab_wall[tempY - 1][tempX] = chip.getChip().name
-        console.log(tab_wall)
-        console.log("STOP DOL")
-
+        console.log("NIE MA");
       }
-
-    } else {
-      console.log("NIE MA");
     }
+
+    requestAnimationFrame(render);
+
+
+
+
+    renderer.render(scene, camera);
+
   }
 
-  requestAnimationFrame(render);
 
 
-
-
-  renderer.render(scene, camera);
-
-}
-
-
-
-render();
+  render();
 
 
 
