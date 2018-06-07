@@ -19,6 +19,20 @@ function Game() {
   renderer.setSize($(window).width(), $(window).height());
   $("#root").append(renderer.domElement);
 
+  //========ZMIENNE
+
+  var move = false;
+
+
+  var tab_wall = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+
+  ]
   //=============OrbitControls
   var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
   orbitControl.addEventListener('change', function() {
@@ -54,40 +68,84 @@ function Game() {
 
   $(document).keydown(function(e) {
 
-    if(e.which==65){
-  console.log("LEFT");
-  chip.getChip().position.z+=7
+    if (e.which == 65) {
+      console.log("LEFT");
+      if (!move)
+        chip.getChip().position.z += 7
+
     }
-    if(e.which==68){
-    console.log("RIGHT");
-    chip.getChip().position.z-=7
+    if (e.which == 68) {
+      console.log("RIGHT");
+      if (!move)
+        chip.getChip().position.z -= 7
+
     }
-    if(e.which==32){
-      chip.getChip().position.y-=7
+    if (e.which == 32) {
+
+      move = true
 
     }
 
   })
 
 
-//65 68
+  //65 68
 
   function render() {
 
+    if (move) {
+
+      tempY = (6 - Math.floor((chip.getChip().position.y - 15) / 7)) - 1
+      tempX = (chip.getChip().position.z / 7) + 3
 
 
-    requestAnimationFrame(render);
+    console.log(tempY, tempX);
+    chip.getChip().translateZ(0.7)
+    if (tempY > 0) {
+
+      if (tempY < tab_wall.length) {
+        if (tab_wall[tempY][tempX] != 0) {
+          // Jeśli coś jest
+
+          tab_wall[tempY - 1][tempX] = chip.getChip().name
+          console.log(tab_wall)
+          move = false
+          tab_wall[tempY - 1][tempX] = chip.getChip().name
+          console.log(tab_wall)
+          console.log("STOP KOLIZJA")
 
 
 
+        } else {
 
-    renderer.render(scene, camera);
 
+        }
+
+      } else {
+        move = false
+        tab_wall[tempY - 1][tempX] = chip.getChip().name
+        console.log(tab_wall)
+        console.log("STOP DOL")
+
+      }
+
+    } else {
+      console.log("NIE MA");
+    }
   }
 
+  requestAnimationFrame(render);
 
 
-  render();
+
+
+  renderer.render(scene, camera);
+
+}
+
+
+
+render();
 
 
 
