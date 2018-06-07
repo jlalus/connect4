@@ -17,8 +17,6 @@ app.get("/", function (req, res) {
 
 })
 
-
-
 app.listen(port, function() {
   console.log("serwer startuje na porcie 3000")
 

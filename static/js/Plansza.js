@@ -6,7 +6,7 @@ function Plansza() {
 
 
     loader.load('model/table.json', function(obj) {
-
+console.log(obj)
 obj.rotateY(Math.PI/2)
 obj.scale.set(5,5,5)
 obj.position.set(-10,-158,-150)

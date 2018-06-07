@@ -23,10 +23,10 @@ function Game() {
   var settings = new Settings();
 
   //=============OrbitControls
-  var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-  orbitControl.addEventListener('change', function() {
-    renderer.render(scene, camera)
-  });
+//  var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
+//  orbitControl.addEventListener('change', function() {
+//    renderer.render(scene, camera)
+//  });
 
   var axes = new THREE.AxesHelper(1000)
   scene.add(axes)
@@ -34,6 +34,9 @@ function Game() {
 
   var chip = new Chip();
   scene.add(chip.getChip())
+
+  var skyBox = new SkyBox();
+  scene.add(skyBox.getSkyBox())
 
   var wall = new Wall();
   wall.loadModel(function(data) {
@@ -83,6 +86,8 @@ function Game() {
   })
 
   //65 68
+
+var alfa=0
 
   function render() {
 
@@ -139,6 +144,7 @@ function Game() {
 
     requestAnimationFrame(render);
 
+  
 
 
 
