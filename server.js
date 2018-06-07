@@ -3,7 +3,9 @@ var fs = require("fs");
 var express = require("express")
 var app = express()
 var qs = require("querystring")
-//var socketio = require("socket.io")
+var port=3000;
+var server = http.createServer(app)
+var socketio = require("socket.io")
 
 app.use(express.static('static'))
 
@@ -17,11 +19,11 @@ app.get("/", function (req, res) {
 
 
 
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log("serwer startuje na porcie 3000")
 
 });
-// var io = socketio.listen(server)
+ var io = socketio.listen(server)
 // io.sockets.on("connection", function (client) {
 //     ilu++;
 //     if (ilu == 1) {

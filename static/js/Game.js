@@ -20,19 +20,8 @@ function Game() {
   $("#root").append(renderer.domElement);
 
   //========ZMIENNE
+  var settings = new Settings();
 
-  var move = false;
-  var gravity = 1;
-
-  var tab_wall = [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-
-  ]
   //=============OrbitControls
   var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
   orbitControl.addEventListener('change', function() {
@@ -50,6 +39,11 @@ function Game() {
   wall.loadModel(function(data) {
     scene.add(data)
   })
+
+  // var lamp = new Lamp();
+  // lamp.loadModel(function(data) {
+  //   scene.add(data)
+  // })
 
   var plansza = new Plansza();
   plansza.loadModel(function(data) {
@@ -70,52 +64,57 @@ function Game() {
 
     if (e.which == 65) {
       console.log("LEFT");
-      if (!move)
+      if (!settings.move)
         chip.getChip().position.z += 7
 
     }
     if (e.which == 68) {
       console.log("RIGHT");
-      if (!move)
+      if (!settings.move)
         chip.getChip().position.z -= 7
 
     }
     if (e.which == 32) {
 
-      move = true
+      settings.move = true
 
     }
 
   })
 
-
   //65 68
 
   function render() {
 
-    if (move) {
+    if (settings.move) {
 
       tempY = (6 - Math.floor((chip.getChip().position.y - 16) / 7)) - 1
       tempX = Math.floor(chip.getChip().position.z / 7) + 3
 
 
-      console.log(tempY, tempX);
-      chip.getChip().translateZ(1)
+      //  console.log(tempY, tempX);
+      chip.getChip().translateZ(settings.gravity)
 
       if (tempY > 0) {
 
-        if (tempY < tab_wall.length) {
-          if (tab_wall[tempY][tempX] != 0) {
-            // Jeśli coś jest
+        if (tempY < settings.tab_wall.length) {
+          if (settings.tab_wall[tempY][tempX] != 0) {
 
-            tab_wall[tempY - 1][tempX] = chip.getChip().name
-            console.log(tab_wall)
-            move = false
-            tab_wall[tempY - 1][tempX] = chip.getChip().name
-            console.log(tab_wall)
-            console.log("STOP KOLIZJA")
-            chip = new Chip();
-            scene.add(chip.getChip())
+            if (settings.tab_wall[0][tempX] != 0) {
+              settings.move = false
+              chip.getChip().position.y = 63
+              console.log("STOP PIERWSZY")
+            } else {
+              //  console.log(settings.tab_wall)
+              settings.move = false
+              settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
+              console.log(settings.tab_wall)
+              console.log("STOP KOLIZJA")
+              chip = new Chip();
+              scene.add(chip.getChip())
+            }
+
+
 
 
           } else {
@@ -124,9 +123,9 @@ function Game() {
           }
 
         } else {
-          move = false
-          tab_wall[tempY - 1][tempX] = chip.getChip().name
-          console.log(tab_wall)
+          settings.move = false
+          settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
+          console.log(settings.tab_wall)
           console.log("STOP DOL")
           chip = new Chip();
           scene.add(chip.getChip())
@@ -134,7 +133,7 @@ function Game() {
         }
 
       } else {
-        console.log("NIE MA");
+        //  console.log("NIE MA");
       }
     }
 
