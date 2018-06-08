@@ -17,20 +17,35 @@ function Game() {
 
   renderer.setClearColor(0xFFFFFF);
   renderer.setSize($(window).width(), $(window).height());
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   $("#root").append(renderer.domElement);
 
   //========ZMIENNE
-  var settings = new Settings();
 
-//  =============OrbitControls
- var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
- orbitControl.addEventListener('change', function() {
-   renderer.render(scene, camera)
- });
+
+  //  =============OrbitControls
+  var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
+  orbitControl.addEventListener('change', function() {
+    renderer.render(scene, camera)
+  });
 
   //var axes = new THREE.AxesHelper(1000)
   //scene.add(axes)
 
+  //============LIGHT
+  var light1 = new Light(0.8, 0xFFFFFF);
+  scene.add(light1.getLightCon())
+  var spotLightHelper = new THREE.SpotLightHelper(light1.getLight());
+  scene.add(spotLightHelper);
+
+  var light2 = new Light(0.7, 0xa3742d);
+  scene.add(light2.getLightCon())
+  light2.getLightCon().position.set(-300, 200, 0)
+  light2.getLightCon().rotateZ(-Math.PI / 8)
+  light2.getLightCon().rotateZ(Math.PI / 2)
+  var spotLightHelper = new THREE.SpotLightHelper(light2.getLight());
+  scene.add(spotLightHelper);
 
   var chip = new Chip();
   scene.add(chip.getChip())
@@ -41,12 +56,13 @@ function Game() {
   var wall = new Wall();
   wall.loadModel(function(data) {
     scene.add(data)
+
   })
 
-  // var lamp = new Lamp();
-  // lamp.loadModel(function(data) {
-  //   scene.add(data)
-  // })
+  var lamp = new Lamp();
+  lamp.loadModel(function(data) {
+    scene.add(data)
+  })
 
   var plansza = new Plansza();
   plansza.loadModel(function(data) {
@@ -57,7 +73,7 @@ function Game() {
   scene.add(stars.getStar())
 
 
-  camera.position.set(200, 100, 0)
+  camera.position.set(-200, 100, 100) //lub 100
   camera.lookAt(scene.position)
 
 
@@ -65,16 +81,20 @@ function Game() {
 
   $(document).keydown(function(e) {
 
-    if (e.which == 65) {
+    if (e.which == 68) {
       console.log("LEFT");
       if (!settings.move)
-        chip.getChip().position.z += 7
 
+        if (Math.floor(chip.getChip().position.z) < 21) {
+          chip.getChip().position.z += 7
+        }
     }
-    if (e.which == 68) {
+    if (e.which == 65) {
       console.log("RIGHT");
       if (!settings.move)
-        chip.getChip().position.z -= 7
+        if (Math.floor(chip.getChip().position.z) > -21) {
+          chip.getChip().position.z -= 7
+        }
 
     }
     if (e.which == 32) {
@@ -87,7 +107,7 @@ function Game() {
 
   //65 68
 
-var alfa=0
+  var alfa = 0
 
   function render() {
 

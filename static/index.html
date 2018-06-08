@@ -16,6 +16,7 @@
   <script src="js/Wall.js"></script>
   <script src="js/Chip.js"></script>
   <script src="js/SkyBox.js"></script>
+  <script src="js/Light.js"></script>
   <script src="js/Plansza.js"></script>
   <script src="js/Lamp.js"></script>
   <script src="js/Game.js"></script>
@@ -25,9 +26,11 @@
 
   <script>
     var game;
-
+var settings
     $(document).ready(function() {
+settings = new Settings();
       game = new Game();
+
 
     })
   </script>

@@ -4,7 +4,7 @@ function Stars() {
 
   var geometry = new THREE.OctahedronGeometry(1, 0)
   var material = new THREE.MeshBasicMaterial({
-    wireframe: true,
+    wireframe: false,
     color: "yellow",
   });
   var stars = new THREE.Object3D();

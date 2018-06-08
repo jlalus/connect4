@@ -4,9 +4,9 @@ function Wall() {
 
     var loader = new THREE.JSONLoader();
 
-    var material = new THREE.MeshBasicMaterial({
+    var material = new THREE.MeshPhongMaterial({
       side: THREE.DoubleSide,
-      map: new THREE.TextureLoader().load('img/paper.jpg'),
+      map: new THREE.TextureLoader().load('img/texture.jpg'),
       transparent: true,
       opacity: 1,
     });

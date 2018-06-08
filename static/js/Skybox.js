@@ -6,7 +6,7 @@ function SkyBox() {
   var directions  = ["wall", "wall", "posy", "negy", "wall", "wall"]; 
   var imageSuffix = ".jpg";    
   var materialArray = []; 
-  for (var i = 0; i < 6; i++)   materialArray.push(new THREE.MeshBasicMaterial({   
+  for (var i = 0; i < 6; i++)   materialArray.push(new THREE.MeshPhongMaterial({   
     map: THREE.ImageUtils.loadTexture(imagePrefix + directions[i] + imageSuffix),
        side: THREE.BackSide  
   }));   

@@ -1,7 +1,7 @@
 function Chip() {
 
   var geometry = new THREE.CylinderGeometry(3.3, 3.3, 1, 32);
-  var material = new THREE.MeshBasicMaterial({
+  var material = new THREE.MeshPhongMaterial({
     // wireframe: true,
     color: "red",
   });
