@@ -34,18 +34,27 @@ function Game() {
   //scene.add(axes)
 
   //============LIGHT
-  var light1 = new Light(0.8, 0xFFFFFF);
+  var light1 = new Light(0.8, 0xFFFFFF,2,10);
   scene.add(light1.getLightCon())
-  var spotLightHelper = new THREE.SpotLightHelper(light1.getLight());
-  scene.add(spotLightHelper);
+  // var spotLightHelper = new THREE.SpotLightHelper(light1.getLight());
+  // scene.add(spotLightHelper);
 
-  var light2 = new Light(0.7, 0xa3742d);
+  var light2 = new Light(2, 0xa3742d,20,20);
   scene.add(light2.getLightCon())
-  light2.getLightCon().position.set(-300, 200, 0)
-  light2.getLightCon().rotateZ(-Math.PI / 8)
-  light2.getLightCon().rotateZ(Math.PI / 2)
-  var spotLightHelper = new THREE.SpotLightHelper(light2.getLight());
-  scene.add(spotLightHelper);
+  light2.getLightCon().position.set(-400, 400, -400)
+  light2.getLightCon().rotateZ(-Math.PI / 2)
+  light2.getLightCon().rotateX(-Math.PI / 4)
+
+  // var spotLightHelper = new THREE.SpotLightHelper(light2.getLight());
+  // scene.add(spotLightHelper);
+
+  var light3 = new Light(1, 0xFFFFFF,5,20);
+  scene.add(light3.getLightCon())
+  light3.getLightCon().position.set(400, 800, 0)
+  light3.getLightCon().rotateZ(Math.PI / 4)
+
+  // var spotLightHelper = new THREE.SpotLightHelper(light3.getLight());
+  //scene.add(spotLightHelper);
 
   var chip = new Chip();
   scene.add(chip.getChip())

@@ -21,23 +21,38 @@ app.listen(port, function() {
   console.log("serwer startuje na porcie 3000")
 
 });
+
+function user(id, name, color) {
+  this.id = id;
+  this.name = name;
+  this.color = color;
+}
+var tabUsers = [];
+var color;
  var io = socketio.listen(server)
-// io.sockets.on("connection", function (client) {
-//     ilu++;
-//     if (ilu == 1) {
-//         client.emit("onconnect", {
-//             stan: "wait",
-//         })
-//     }
-//     client.on("disconnect", function () {
-//         ilu--;
-//         if(ilu <2)
-//         io.sockets.emit("usun", { "usun":true });
-//     })
-//     if (ilu == 2) {
-//         client.emit("onconnect", {
-//             stan: "play",
-//         })
-//     }
-//
-// })
+io.sockets.on("connection", function (client) {
+
+    if(tabUsers.length == 0) color = "red"
+    else color = "blue"
+
+    tabUsers.push(new user(client.id, "test", ))
+    ilu++;
+    if (ilu == 1) {
+        client.emit("onconnect", {
+            stan: "wait",
+        })
+    }
+    client.on("disconnect", function () {
+        ilu--;
+        if(ilu <2)
+        io.sockets.emit("usun", { "usun":true });
+    })
+    if (ilu == 2) {
+        client.emit("onconnect", {
+            stan: "play",
+        })
+    }
+
+
+
+})

@@ -12,7 +12,8 @@ function Wall() {
     });
     loader.load('model/model.json', function(geometry) {
       var wall = new THREE.Mesh(geometry, material)
-
+      wall.castShadow = true; //default is false
+      wall.receiveShadow = false; //default
       wall.scale.set(7, 7, 7)
 
       var box = new THREE.Box3().setFromObject(wall);

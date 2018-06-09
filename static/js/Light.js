@@ -1,4 +1,4 @@
-function Light(intensity,color) {
+function Light(intensity,color,range,angle) {
 
 
 var light
@@ -8,9 +8,11 @@ var light
 
   function init() {
 
-    light = new THREE.SpotLight(color, intensity, 1000, 20);
+    light = new THREE.SpotLight(color, intensity, 1000,angle);
     light.position.set(0, 0, 0);
     light.castShadow = true;
+    light.shadow.mapSize.width = 2000;  // default
+light.shadow.mapSize.height = 2000; // default
     var geometry = new THREE.SphereGeometry(10, 5, 100);
     var material = new THREE.MeshBasicMaterial({
       color: 0xffff00,
