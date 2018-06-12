@@ -5,7 +5,9 @@
   "main": "server.js",
   "dependencies": {
     "express": "^4.16.3",
-    "socket.io": "^2.1.1"
+    "i": "^0.3.6",
+    "socket.io": "^2.1.1",
+    "three-fps-counter": "^0.2.0"
   },
   "devDependencies": {},
   "scripts": {
