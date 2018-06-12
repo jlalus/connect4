@@ -1,0 +1,17 @@
+body{
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */
+}
+
+#welcome{
+    /* left: 20%; */
+    position: absolute;
+    width: 80%;
+    height: 300px;
+    background: rgba(57, 230, 57, 0.404);
+    border: 30px solid rgba(1, 43, 1, 0.801);
+    border-radius: 80px;
+    text-align: center;
+    font-size: 32px;
+}
