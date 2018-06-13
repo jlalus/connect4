@@ -92,8 +92,8 @@ function Game() {
   var chip = new Chip();
   scene.add(chip.getChip())
 
-  /* var skyBox = new SkyBox();
-  scene.add(skyBox.getSkyBox()) */
+   var skyBox = new SkyBox();
+  scene.add(skyBox.getSkyBox()) 
 
   var wall = new Wall();
   wall.loadModel(function(data) {
