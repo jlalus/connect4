@@ -16,13 +16,13 @@ function Game() {
   var _name = null;
   var _update;
   //==========SOCKETS
-  client.on("start", function (data) {
+  client.on("start", function(data) {
     _id = data.id;
     //client.emit("start",data)
     console.log(data);
   })
 
-  client.on("color", function (data) {
+  client.on("color", function(data) {
     _color = data.color
     _name = data.name
     console.log(_color, _name)
@@ -34,10 +34,13 @@ function Game() {
     console.log(_update)
   })
 
-  $("#bNick").on("click", function () {
+  $("#bNick").on("click", function() {
     var val = $("#nick").val();
     console.log("VAL", val)
-    client.emit("addUser", { id: _id, nick: val })
+    client.emit("addUser", {
+      id: _id,
+      nick: val
+    })
     $("#welcome").remove()
   })
 
@@ -56,7 +59,7 @@ function Game() {
 
   //  =============OrbitControls
   var orbitControl = new THREE.OrbitControls(camera, renderer.domElement);
-  orbitControl.addEventListener('change', function () {
+  orbitControl.addEventListener('change', function() {
     renderer.render(scene, camera)
   });
 
@@ -93,25 +96,145 @@ function Game() {
   scene.add(skyBox.getSkyBox())
 
   var wall = new Wall();
-  wall.loadModel(function (data) {
+  wall.loadModel(function(data) {
     scene.add(data)
 
   })
 
   var lamp = new Lamp();
-  lamp.loadModel(function (data) {
+  lamp.loadModel(function(data) {
     scene.add(data)
   })
 
   var plansza = new Plansza();
-  plansza.loadModel(function (data) {
+  plansza.loadModel(function(data) {
     scene.add(data)
 
   })
   var stars = new Stars();
   scene.add(stars.getStar())
 
+  var win = null;
 
+  function CheckArray(y, x) {
+    var color = settings.tab_wall[y][x]
+//===================prawo lewo============
+    var win = 1
+    //prawo
+    for (var i = 1; i < 4; i++) {
+      if (x + i < 7) {
+        if (settings.tab_wall[y][x + i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+
+    //lewo
+    for (var i = 1; i < 4; i++) {
+      if (x - i >= 0) {
+        if (settings.tab_wall[y][x - i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+    if (win == 4) {
+      return true;
+    }
+
+//===================dol============
+    win = 1
+
+    //dol
+    for (var i = 1; i < 4; i++) {
+      console.log(y)
+      if (y + i < 6) {
+        if (settings.tab_wall[y + i][x] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+    if (win == 4) {
+      return true;
+    }
+    win = 1
+
+
+//===================skos prawo lewo============
+
+    //skos prawo gora
+    for (var i = 1; i < 4; i++) {
+      if (x + i < 7 && y - i >= 0) {
+        if (settings.tab_wall[y - i][x + i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+
+    //sko lewo dol
+    for (var i = 1; i < 4; i++) {
+      if (x - i >= 0 && y + i < 6) {
+        if (settings.tab_wall[y + i][x - i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+    if (win == 4) {
+      return true;
+    }
+
+    //===================skos lewo prawo============
+win=1
+    //skos lewo gora
+    for (var i = 1; i < 4; i++) {
+      if (x - i >=0 && y - i >= 0) {
+        if (settings.tab_wall[y - i][x - i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+
+
+    //skos prawo dol
+    for (var i = 1; i < 4; i++) {
+      if (x + i < 7 && y + i < 6) {
+        if (settings.tab_wall[y + i][x + i] == color) {
+          win++
+        } else {
+          break
+        }
+      } else {
+        break
+      }
+    }
+    if (win == 4) {
+      return true;
+    }
+    win = 1
+  }
   camera.position.set(-200, 100, 100) //lub 100
   camera.lookAt(scene.position)
 
@@ -119,7 +242,7 @@ function Game() {
   var ui = new Ui();
 
   var movingChipColor;
-  $(document).keydown(function (e) {
+  $(document).keydown(function(e) {
     if (_name != null) {
       if (!_update) {
         console.log(e.which)
@@ -152,7 +275,7 @@ function Game() {
 
 
   console.log("TUTAJ SIE UPDATUJE")
-  client.on("updated", function (data) {
+  client.on("updated", function(data) {
     if (_update) {
       console.log("DATA", data)
       var color;
@@ -186,77 +309,84 @@ function Game() {
   var alfa = 0
 
   function render() {
-      if (settings.move) {
+    if (settings.move) {
 
-        tempY = (6 - Math.floor((chip.getChip().position.y - 16) / 7)) - 1
-        tempX = Math.floor(chip.getChip().position.z / 7) + 3
-
-
-        //  console.log(tempY, tempX);
-        chip.getChip().translateZ(settings.gravity)
-
-        if (tempY > 0) {
-
-          if (tempY < settings.tab_wall.length) {
-            if (settings.tab_wall[tempY][tempX] != 0) {
-
-              if (settings.tab_wall[0][tempX] != 0) {
-                settings.move = false
-                chip.getChip().position.y = 63
-                //    console.log("STOP PIERWSZY")
-              } else {
-                  _update = !_update
-                  console.log(_update)
-                //  console.log(settings.tab_wall)
-                settings.move = false
-                settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
-                //   console.log(settings.tab_wall)
-                //   console.log("STOP KOLIZJA")
-                
-                chip = new Chip();
-                if (movingChipColor == "blue") {
-                  chip.getChip().name = "R"
-                  chip.getChip().material.color.setHex(0xff0000)
-                } else {
-                  chip.getChip().name = "B"
-                  chip.getChip().material.color.setHex(0x0000ff)
-                }
-                scene.add(chip.getChip())
-              }
+      tempY = (6 - Math.floor((chip.getChip().position.y - 16) / 7)) - 1
+      tempX = Math.floor(chip.getChip().position.z / 7) + 3
 
 
+      //  console.log(tempY, tempX);
+      chip.getChip().translateZ(settings.gravity)
 
+      if (tempY > 0) {
 
+        if (tempY < settings.tab_wall.length) {
+          if (settings.tab_wall[tempY][tempX] != 0) {
+
+            if (settings.tab_wall[0][tempX] != 0) {
+              settings.move = false
+              chip.getChip().position.y = 63
+              //    console.log("STOP PIERWSZY")
             } else {
-
-
-            }
-
-          } else {
               _update = !_update
               console.log(_update)
-            settings.move = false
-            settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
-            console.log(settings.tab_wall)
-            //  console.log("STOP DOL")
-            chip = new Chip();
-            console.log(chip.getChip())
-            if (movingChipColor == "blue") {
-              chip.getChip().name = "R"
-              chip.getChip().material.color.setHex(0xff0000)
-            } else {
-              chip.getChip().name = "B"
-              chip.getChip().material.color.setHex(0x0000ff)
+              //  console.log(settings.tab_wall)
+              settings.move = false
+              settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
+              //   console.log(settings.tab_wall)
+              //   console.log("STOP KOLIZJA")
+
+              chip = new Chip();
+              if (movingChipColor == "blue") {
+                chip.getChip().name = "R"
+                chip.getChip().material.color.setHex(0xff0000)
+              } else {
+                chip.getChip().name = "B"
+                chip.getChip().material.color.setHex(0x0000ff)
+              }
+              scene.add(chip.getChip())
+              if(CheckArray(tempY - 1, tempX)){
+                alert("WIN")
+              }
             }
-            scene.add(chip.getChip())
+
+
+
+
+          } else {
+
 
           }
 
         } else {
-          //  console.log("NIE MA");
+          _update = !_update
+          console.log(_update)
+          settings.move = false
+          settings.tab_wall[tempY - 1][tempX] = chip.getChip().name
+          console.log(settings.tab_wall)
+          //  console.log("STOP DOL")
+          chip = new Chip();
+          console.log(chip.getChip())
+          if (movingChipColor == "blue") {
+            chip.getChip().name = "R"
+            chip.getChip().material.color.setHex(0xff0000)
+
+          } else {
+            chip.getChip().name = "B"
+            chip.getChip().material.color.setHex(0x0000ff)
+
+          }
+          scene.add(chip.getChip())
+          if(CheckArray(tempY - 1, tempX)){
+            alert("WIN")
+          }
         }
+
+      } else {
+        //  console.log("NIE MA");
       }
-    
+    }
+
 
 
     requestAnimationFrame(render);
