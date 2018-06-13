@@ -1,7 +1,7 @@
 function Game() {
 
   var scene = new THREE.Scene();
-  var client = io.connect("http://localhost:3000");
+  var client = io();
   var camera = new THREE.PerspectiveCamera(
     45, // kąt patrzenia kamery (FOV - field of view)
     $(window).width() / $(window).height(), // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
@@ -92,8 +92,8 @@ function Game() {
   var chip = new Chip();
   scene.add(chip.getChip())
 
-  var skyBox = new SkyBox();
-  scene.add(skyBox.getSkyBox())
+  /* var skyBox = new SkyBox();
+  scene.add(skyBox.getSkyBox()) */
 
   var wall = new Wall();
   wall.loadModel(function(data) {
@@ -106,11 +106,11 @@ function Game() {
     scene.add(data)
   })
 
-  var plansza = new Plansza();
+ /*  var plansza = new Plansza();
   plansza.loadModel(function(data) {
     scene.add(data)
 
-  })
+  }) */
   var stars = new Stars();
   scene.add(stars.getStar())
 
