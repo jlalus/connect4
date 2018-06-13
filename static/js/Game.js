@@ -93,7 +93,7 @@ function Game() {
   scene.add(chip.getChip())
 
    var skyBox = new SkyBox();
-  scene.add(skyBox.getSkyBox()) 
+  scene.add(skyBox.getSkyBox())
 
   var wall = new Wall();
   wall.loadModel(function(data) {
@@ -106,11 +106,11 @@ function Game() {
     scene.add(data)
   })
 
- /*  var plansza = new Plansza();
+  var plansza = new Plansza();
   plansza.loadModel(function(data) {
     scene.add(data)
 
-  }) */
+  })
   var stars = new Stars();
   scene.add(stars.getStar())
 

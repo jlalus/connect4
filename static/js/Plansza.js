@@ -12,16 +12,16 @@ function Plansza() {
     });
 
     loader.load('model/table.json', function(obj) {
-console.log(obj)
-for(var i=0;i<obj.children.length;i++){
-  obj.children[i].material=material
-  obj.children[i].castShadow = true; //default is false
-obj.children[i].receiveShadow = true; //default
-}
+console.log("this",obj)
 
-obj.rotateY(Math.PI/2)
-obj.scale.set(5,5,5)
-obj.position.set(-10,-158,-150)
+  obj.material=material
+  obj.castShadow = true; //default is false
+obj.receiveShadow = true; //default
+
+
+//obj.rotateY(Math.PI/2)
+obj.scale.set(5.6,5.6,5.6)
+obj.position.set(-10,-158,0)
 
 ///test
 
