@@ -20,12 +20,11 @@ app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname + "/static/index.html"))
 })
 
-var io = socketio.listen(server) 
+var io = socketio.listen(server)
 
-io.sockets.on("connection", function (client) {    
-    console.log("klient się podłączył"+ client.id) 
-    // client.id - unikalna nazwa klienta generowana przez socket.io
-})
+
+
+
 
 function user(id, name, color) {
   this.id = id;
@@ -39,7 +38,7 @@ var color;
     console.log("klient się podłączył " + client.id)
      io.sockets.to(client.id).emit("start", {
         id: client.id,
-    }) 
+    })
 
     client.on("addUser", function(data){
         if(tabUsers.length == 0){
@@ -56,14 +55,22 @@ var color;
             })
         }
     })
-    
+
     client.on("update", function(data){
-        
+
         io.sockets.emit("updated", {
             action: data
         })
         console.log(data)
     })
+    client.on("disconnect", function () {
+console.log("rozłączył się",client.id)
+tabUsers=[]
+io.sockets.emit("reload")
+
+    })
+
+
    /*  if(tabUsers.length == 0) color = "red"
     else color = "blue"
 
@@ -74,11 +81,7 @@ var color;
             stan: "wait",
         })
     }
-    client.on("disconnect", function () {
-        ilu--;
-        if(ilu <2)
-        io.sockets.emit("usun", { "usun":true });
-    })
+
     if (ilu == 2) {
         client.emit("onconnect", {
             stan: "play",

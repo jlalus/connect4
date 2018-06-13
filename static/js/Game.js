@@ -273,7 +273,9 @@ win=1
     }
   })
 
-
+client.on("reload",function(data){
+  document.location.reload()
+})
   console.log("TUTAJ SIE UPDATUJE")
   client.on("updated", function(data) {
     if (_update) {
