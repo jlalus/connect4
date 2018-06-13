@@ -6,7 +6,7 @@ function Game() {
     45, // kąt patrzenia kamery (FOV - field of view)
     $(window).width() / $(window).height(), // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
     0.1, // minimalna renderowana odległość
-    10000 // maxymalna renderowana odległość
+    1300 // maxymalna renderowana odległość
   );
   var renderer = new THREE.WebGLRenderer({
     antialias: true
@@ -106,11 +106,11 @@ function Game() {
     scene.add(data)
   })
 
-  // var plansza = new Plansza();
-  // plansza.loadModel(function(data) {
-  //   scene.add(data)
-  //
-  // })
+  var plansza = new Plansza();
+  plansza.loadModel(function(data) {
+    scene.add(data)
+
+  })
   var stars = new Stars();
   scene.add(stars.getStar())
 
