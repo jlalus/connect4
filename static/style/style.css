@@ -47,7 +47,19 @@ color:rgba(159, 163, 168,1);
 
 #table{
   position: absolute;
-  top:50px;
-  z-index: 10;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+z-index: 10;
+  width: 80%;
+  height: 80%;
+  background: rgba(159, 163, 168,0.9);
+  border: 30px solid rgba(159, 163, 168,1);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 32px;
   color: white;
+  font-family: 'Lato', sans-serif;
 }
