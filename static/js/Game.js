@@ -72,7 +72,7 @@ function Game() {
   // var spotLightHelper = new THREE.SpotLightHelper(light1.getLight());
   // scene.add(spotLightHelper);
 
-  var light2 = new Light(2, 0xa3742d, 20, 20);
+  var light2 = new Light(3, 0xa3742d, 20, 20);
   scene.add(light2.getLightCon())
   light2.getLightCon().position.set(-400, 400, -400)
   light2.getLightCon().rotateZ(-Math.PI / 2)
@@ -81,7 +81,7 @@ function Game() {
   // var spotLightHelper = new THREE.SpotLightHelper(light2.getLight());
   // scene.add(spotLightHelper);
 
-  var light3 = new Light(1, 0xFFFFFF, 5, 20);
+  var light3 = new Light(3, 0xFFFFFF, 5, 20);
   scene.add(light3.getLightCon())
   light3.getLightCon().position.set(400, 800, 0)
   light3.getLightCon().rotateZ(Math.PI / 4)
@@ -92,7 +92,7 @@ function Game() {
   var chip = new Chip();
   scene.add(chip.getChip())
 
-   var skyBox = new SkyBox();
+  var skyBox = new SkyBox();
   scene.add(skyBox.getSkyBox())
 
   var wall = new Wall();
@@ -110,15 +110,17 @@ function Game() {
   plansza.loadModel(function(data) {
     scene.add(data)
 
-  })
+   })
   var stars = new Stars();
   scene.add(stars.getStar())
 
   var win = null;
+  var iloscRuchow = 0;
 
   function CheckArray(y, x) {
+    if (settings.tab_wall.length == 42) return "Remis"
     var color = settings.tab_wall[y][x]
-//===================prawo lewo============
+    //===================prawo lewo============
     var win = 1
     //prawo
     for (var i = 1; i < 4; i++) {
@@ -149,7 +151,7 @@ function Game() {
       return true;
     }
 
-//===================dol============
+    //===================dol============
     win = 1
 
     //dol
@@ -171,7 +173,7 @@ function Game() {
     win = 1
 
 
-//===================skos prawo lewo============
+    //===================skos prawo lewo============
 
     //skos prawo gora
     for (var i = 1; i < 4; i++) {
@@ -203,10 +205,10 @@ function Game() {
     }
 
     //===================skos lewo prawo============
-win=1
+    win = 1
     //skos lewo gora
     for (var i = 1; i < 4; i++) {
-      if (x - i >=0 && y - i >= 0) {
+      if (x - i >= 0 && y - i >= 0) {
         if (settings.tab_wall[y - i][x - i] == color) {
           win++
         } else {
@@ -273,9 +275,14 @@ win=1
     }
   })
 
-client.on("reload",function(data){
-  document.location.reload()
-})
+  client.on("Wynik", function(data) {
+    console.log("COS", data)
+  })
+
+
+  client.on("reload", function(data) {
+    document.location.reload()
+  })
   console.log("TUTAJ SIE UPDATUJE")
   client.on("updated", function(data) {
     if (_update) {
@@ -309,8 +316,11 @@ client.on("reload",function(data){
   //65 68
 
   var alfa = 0
+  var clock = new THREE.Clock();
 
   function render() {
+    var delta = clock.getDelta();
+    //console.log(delta);
     if (settings.move) {
 
       tempY = (6 - Math.floor((chip.getChip().position.y - 16) / 7)) - 1
@@ -318,7 +328,7 @@ client.on("reload",function(data){
 
 
       //  console.log(tempY, tempX);
-      chip.getChip().translateZ(settings.gravity)
+      chip.getChip().translateZ(settings.gravity*delta*100)
 
       if (tempY > 0) {
 
@@ -339,16 +349,50 @@ client.on("reload",function(data){
               //   console.log("STOP KOLIZJA")
 
               chip = new Chip();
-              if (movingChipColor == "blue") {
-                chip.getChip().name = "R"
-                chip.getChip().material.color.setHex(0xff0000)
-              } else {
-                chip.getChip().name = "B"
-                chip.getChip().material.color.setHex(0x0000ff)
-              }
+              if (movingChipColor == _color) iloscRuchow++
+                if (movingChipColor == "blue") {
+                  chip.getChip().name = "R"
+                  chip.getChip().material.color.setHex(0xff0000)
+                } else {
+                  chip.getChip().name = "B"
+                  chip.getChip().material.color.setHex(0xffff00)
+                }
               scene.add(chip.getChip())
-              if(CheckArray(tempY - 1, tempX)){
-                alert("WIN")
+              if (CheckArray(tempY - 1, tempX)) {
+                var myColor = _color.slice(0, 1).toUpperCase()
+                var d = new Date()
+                var month, minutes, seconds, hours;
+                if (d.getMonth() > 9) month = d.getMonth() + 1
+                else month = "0" + (d.getMonth() + 1)
+                if (d.getMinutes() < 10) minutes = "0" + d.getMinutes()
+                else minutes = d.getMinutes();
+                if (d.getSeconds() < 10) seconds = "0" + d.getSeconds()
+                else seconds = d.getSeconds();
+                if (d.getHours() < 10) hours = "0" + d.getHours()
+                else hours = d.getHours();
+                var data = d.getDate() + "." + month + "." + d.getFullYear() + " " + hours + ":" + minutes + ":" + seconds;
+                console.log(data)
+                console.log("Mycolor", myColor)
+                console.log("Glowny", _color)
+                if (settings.tab_wall[tempY][tempX] == myColor) {
+                  client.emit("Wynik", {
+                    status: true,
+                    kolor: _color,
+                    id: _id,
+                    name: _name,
+                    data: data,
+                    ilosc: iloscRuchow
+                  })
+                } else {
+                  client.emit("Wynik", {
+                    status: false,
+                    kolor: _color,
+                    id: _id,
+                    name: _name,
+                    data: data,
+                    ilosc: iloscRuchow
+                  })
+                }
               }
             }
 
@@ -369,18 +413,52 @@ client.on("reload",function(data){
           //  console.log("STOP DOL")
           chip = new Chip();
           console.log(chip.getChip())
-          if (movingChipColor == "blue") {
-            chip.getChip().name = "R"
-            chip.getChip().material.color.setHex(0xff0000)
+          if (movingChipColor == _color) iloscRuchow++
+            if (movingChipColor == "blue") {
+              chip.getChip().name = "R"
+              chip.getChip().material.color.setHex(0xff0000)
 
-          } else {
-            chip.getChip().name = "B"
-            chip.getChip().material.color.setHex(0x0000ff)
+            } else {
+              chip.getChip().name = "B"
+              chip.getChip().material.color.setHex(0xffff00)
 
-          }
+            }
           scene.add(chip.getChip())
-          if(CheckArray(tempY - 1, tempX)){
-            alert("WIN")
+          if (CheckArray(tempY - 1, tempX)) {
+            var myColor = _color.slice(0, 1).toUpperCase()
+            var d = new Date()
+            var month, minutes, seconds, hours;
+            if (d.getMonth() > 9) month = d.getMonth() + 1
+            else month = "0" + (d.getMonth() + 1)
+            if (d.getMinutes() < 10) minutes = "0" + d.getMinutes()
+            else minutes = d.getMinutes();
+            if (d.getSeconds() < 10) seconds = "0" + d.getSeconds()
+            else seconds = d.getSeconds();
+            if (d.getHours() < 10) hours = "0" + d.getHours()
+            else hours = d.getHours();
+            var data = d.getDate() + "." + month + "." + d.getFullYear() + " " + hours + ":" + minutes + ":" + seconds;
+            console.log(data)
+            console.log("Mycolor", myColor)
+            console.log("Glowny", _color)
+            if (settings.tab_wall[tempY][tempX] == myColor) {
+              client.emit("Wynik", {
+                status: false,
+                kolor: _color,
+                id: _id,
+                name: _name,
+                data: data,
+                ilosc: iloscRuchow
+              })
+            } else {
+              client.emit("Wynik", {
+                status: false,
+                kolor: _color,
+                id: _id,
+                name: _name,
+                data: data,
+                ilosc: iloscRuchow
+              })
+            }
           }
         }
 

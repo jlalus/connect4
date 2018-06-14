@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
   <script src="/libs/io.js"></script>
   <script src="libs/jquery.js"></script>
@@ -56,9 +57,10 @@ settings = new Settings();
 
 <body>
     <div id="welcome">
-        <span>Witaj, podaj swój nick: </span>
-        <input type="text" id="nick">
-        <input type="button" id="bNick" value="Zatwierdź">
+        <span id="tekst">Witaj, podaj swój nick: </span>
+        <br>
+        <input type="text" id="nick" placeholder="nick">
+        <input type="button" id="bNick" value="Zaloguj">
       </div>
   <!-- <div id="wait"></div> -->
   <div id="root"></div>
