@@ -6,7 +6,7 @@ function Game() {
     45, // kąt patrzenia kamery (FOV - field of view)
     $(window).width() / $(window).height(), // proporcje widoku, powinny odpowiadać proporjom naszego ekranu przeglądarki
     0.1, // minimalna renderowana odległość
-    1300 // maxymalna renderowana odległość
+    5000 // maxymalna renderowana odległość
   );
   var renderer = new THREE.WebGLRenderer({
     antialias: true
@@ -41,6 +41,16 @@ function Game() {
       id: _id,
       nick: val
     })
+
+    client.emit("Wynik", {
+      status: true,
+      kolor: "red",
+      id: _id,
+      name: "nick",
+      data: "2017",
+      ilosc: 2
+    })
+
     $("#welcome").remove()
   })
 
@@ -276,7 +286,27 @@ function Game() {
   })
 
   client.on("Wynik", function(data) {
-    console.log("COS", data)
+
+data=JSON.parse(data)
+  console.log("COS", data)
+
+  var div = $('<div>')
+$("body").append(div)
+div.attr("id","table")
+
+for (var i = 0; i < data.length-1; i+=2) {
+div.append(data[i].name)
+div.append(data[i].kolor)
+div.append(data[i].ilosc)
+div.append(data[i].status)
+div.append(data[i].data)
+div.append(data[i+1].name)
+div.append(data[i+1].kolor)
+div.append(data[i+1].ilosc)
+div.append(data[i+1].status)
+div.append(data[i+1].data)
+div.append("<br>")
+}
   })
 
 
@@ -441,6 +471,7 @@ function Game() {
             console.log("Mycolor", myColor)
             console.log("Glowny", _color)
             if (settings.tab_wall[tempY][tempX] == myColor) {
+
               client.emit("Wynik", {
                 status: false,
                 kolor: _color,

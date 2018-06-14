@@ -44,3 +44,10 @@ color:rgba(159, 163, 168,1);
 #tekst{
   margin: 20px;
 }
+
+#table{
+  position: absolute;
+  top:50px;
+  z-index: 10;
+  color: white;
+}
