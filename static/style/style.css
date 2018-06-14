@@ -58,8 +58,8 @@ z-index: 10;
   background: rgba(159, 163, 168,0.9);
   border: 30px solid rgba(159, 163, 168,1);
   border-radius: 10px;
-  text-align: center;
-  font-size: 32px;
+  text-align: left;
+  font-size: 18px;
   color: white;
   font-family: 'Lato', sans-serif;
 }
