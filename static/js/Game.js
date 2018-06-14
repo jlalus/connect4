@@ -293,19 +293,23 @@ data=JSON.parse(data)
   var div = $('<div>')
 $("body").append(div)
 div.attr("id","table")
+var table = $('<table>')
+$("#table").append(table)
 
 for (var i = 0; i < data.length-1; i+=2) {
-div.append(data[i].name);div.append(" ")
-div.append(data[i].kolor);div.append(" ")
-div.append(data[i].ilosc);div.append(" ")
-div.append(data[i].status);div.append(" ")
-div.append(data[i].data);div.append(" ")
-div.append(data[i+1].name);div.append(" ")
-div.append(data[i+1].kolor);div.append(" ")
-div.append(data[i+1].ilosc);div.append(" ")
-div.append(data[i+1].status);div.append(" ")
-div.append(data[i+1].data);div.append(" ")
-div.append("<br>")
+  var tr=$('<tr>')
+  table.append(tr)
+tr.append("<td>"+data[i].name+"</td>");
+tr.append("<td>"+data[i].kolor+"</td>");
+tr.append("<td>"+data[i].ilosc+"</td>");
+tr.append("<td>"+data[i].status+"</td>");
+tr.append("<td>"+data[i].data+"</td>");
+tr.append("<td>"+data[i+1].name+"</td>");
+tr.append("<td>"+data[i+1].kolor+"</td>");
+tr.append("<td>"+data[i+1].ilosc+"</td>");
+tr.append("<td>"+data[i+1].status+"</td>");
+tr.append("<td>"+data[i+1].data+"</td>");
+
 }
   })
 
