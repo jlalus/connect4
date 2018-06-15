@@ -42,15 +42,8 @@ function Game() {
       nick: val
     })
 
-    client.emit("Wynik", {
-      status: true,
-      kolor: "red",
-      id: _id,
-      name: "nick",
-      data: "2017",
-      ilosc: 2
-    })
-
+$("#help").html("Ruch gracza: czerwony")
+$("#block").css("display","none")
     $("#welcome").remove()
   })
 
@@ -289,12 +282,13 @@ function Game() {
 
 data=JSON.parse(data)
   console.log("COS", data)
-
+$("#help").html("Koniec gry")
   var div = $('<div>')
 $("body").append(div)
 div.attr("id","table")
 var table = $('<table>')
 $("#table").append(table)
+$("#block").css("display","block")
 
 for (var i = 0; i < data.length-1; i+=2) {
   var tr=$('<tr>')
@@ -387,9 +381,11 @@ tr.append("<td>"+data[i+1].data+"</td>");
                 if (movingChipColor == "blue") {
                   chip.getChip().name = "R"
                   chip.getChip().material.color.setHex(0xff0000)
+                  $("#help").html("Ruch gracza: czerwony")
                 } else {
                   chip.getChip().name = "B"
                   chip.getChip().material.color.setHex(0xffff00)
+                      $("#help").html("Ruch gracza: żółty")
                 }
               scene.add(chip.getChip())
               if (CheckArray(tempY - 1, tempX)) {
@@ -408,7 +404,7 @@ tr.append("<td>"+data[i+1].data+"</td>");
                 console.log(data)
                 console.log("Mycolor", myColor)
                 console.log("Glowny", _color)
-                if (settings.tab_wall[tempY][tempX] == myColor) {
+                if (settings.tab_wall[tempY-1][tempX] == myColor) {
                   client.emit("Wynik", {
                     status: true,
                     kolor: _color,
@@ -451,10 +447,12 @@ tr.append("<td>"+data[i+1].data+"</td>");
             if (movingChipColor == "blue") {
               chip.getChip().name = "R"
               chip.getChip().material.color.setHex(0xff0000)
+              $("#help").html("Ruch gracza: czerwony")
 
             } else {
               chip.getChip().name = "B"
               chip.getChip().material.color.setHex(0xffff00)
+              $("#help").html("Ruch gracza: żółty")
 
             }
           scene.add(chip.getChip())
@@ -474,7 +472,7 @@ tr.append("<td>"+data[i+1].data+"</td>");
             console.log(data)
             console.log("Mycolor", myColor)
             console.log("Glowny", _color)
-            if (settings.tab_wall[tempY][tempX] == myColor) {
+            if (settings.tab_wall[tempY-1][tempX] == myColor) {
 
               client.emit("Wynik", {
                 status: false,

@@ -1,0 +1,31 @@
+Instrukcja do gry
+
+Gra logiczna przeznaczona dla 2 graczy w wieku od 6 do 99+ lat.
+
+Warunki korzystania z gry:
+Gra Connect4 stworzona przez Bartosza Klinowskiego, oraz Jakuba Lalika została wykonana tylko i wyłącznie na zajęcia z Aplikacji Serwerowych i nie upoważnia nikogo, bez zgody twórców, do rozpowszechniania aplikacji i wykorzystywania jej do własnych celów. Gra w przyszłości będzie dopracowywana i zostanie udostępniona do użytku publicznego. 
+W razie pytań proszę kontaktować się na maile: 
+bartoszklinowski@gmail.com 
+jakub.la1511@gmail.com  
+
+Wprowadzenie:
+
+Connect4 pozwala na zintegrowanie się dwóch osób po przez sieć. Zadaniem graczy jest naprzemiennie wrzucanie żetonów do planszy. Jeśli chcesz poćwiczyć swoją głowę, oraz nauczyć się myśleć strategicznie, weź udział w grze i baw się dobrze. Zapraszamy!
+
+Sterowanie:
+
+A - lewo,
+D - prawo,
+Space - dół (zatwierdzenie pozycji żetonu)
+
+Przygotowanie do gry:
+
+Przed rozpoczęciem rozgrywki należy uruchomić serwer NODE, oraz bazę danych MongoDB polecenia: 
+w folderze z grą (node serwer.js), 
+w folderze mongodb/bin (mongo).
+Następnie w przeglądarce wpisujemy adres IP serwera oraz port (domyślnie 3000).
+Po załadowaniu się strony, wpisujemy swój nick i czekamy na sygnał od drugiego gracza na rozpoczęcie ruchu. Gracze wykonują swój ruch naprzemiennie. 
+
+Przebieg gry:
+
+Celem gry jest ułożenie w lini prostej, poziomej, lub ukośniej 4 żetonów tego samego koloru. W czasie rozgrywki w prawym górnym rogu znajduje się nawigator, określający przebieg rozgrywki. Po zakończeniu gry, na stronie pojawia się tabela z najlepszymi wynikami, aby zagrać ponownie należy odświeżyć stronę (strona u 2 gracza odświeży się automatycznie).
