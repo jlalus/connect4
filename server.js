@@ -89,6 +89,9 @@ io.sockets.on("connection", function (client) {
                 color: "blue"
             })
         }
+        if(tabUsers.length==2){
+          io.sockets.emit("ready");
+        }
     })
 
     client.on("update", function (data) {

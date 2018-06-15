@@ -22,6 +22,16 @@ function Game() {
     console.log(data);
   })
 
+  client.on("ready", function(data) {
+
+    $("#block").css("display", "none")
+    if(_update){
+      $("#help").html("Ruch przeciwnika")
+    }else{
+      $("#help").html("Twoj Ruch")
+    }
+  })
+
   client.on("color", function(data) {
     _color = data.color
     _name = data.name
@@ -42,8 +52,8 @@ function Game() {
       nick: val
     })
 
-$("#help").html("Ruch gracza: czerwony")
-$("#block").css("display","none")
+    $("#help").html("Oczekiwanie na gracza")
+
     $("#welcome").remove()
   })
 
@@ -113,7 +123,7 @@ $("#block").css("display","none")
   plansza.loadModel(function(data) {
     scene.add(data)
 
-   })
+  })
   var stars = new Stars();
   scene.add(stars.getStar())
 
@@ -280,31 +290,67 @@ $("#block").css("display","none")
 
   client.on("Wynik", function(data) {
 
-data=JSON.parse(data)
-  console.log("COS", data)
-$("#help").html("Koniec gry")
-  var div = $('<div>')
-$("body").append(div)
-div.attr("id","table")
-var table = $('<table>')
-$("#table").append(table)
-$("#block").css("display","block")
+    data = JSON.parse(data)
+    console.log("COS", data)
+    $("#help").html("Koniec gry")
+    var div = $('<div>')
+    $("body").append(div)
+    div.attr("id", "table")
+    var table = $('<table>')
+    $("#table").append(table)
+    $("#block").css("display", "block")
 
-for (var i = 0; i < data.length-1; i+=2) {
-  var tr=$('<tr>')
-  table.append(tr)
-tr.append("<td>"+data[i].name+"</td>");
-tr.append("<td>"+data[i].kolor+"</td>");
-tr.append("<td>"+data[i].ilosc+"</td>");
-tr.append("<td>"+data[i].status+"</td>");
-tr.append("<td>"+data[i].data+"</td>");
-tr.append("<td>"+data[i+1].name+"</td>");
-tr.append("<td>"+data[i+1].kolor+"</td>");
-tr.append("<td>"+data[i+1].ilosc+"</td>");
-tr.append("<td>"+data[i+1].status+"</td>");
-tr.append("<td>"+data[i+1].data+"</td>");
+    //===========table
+    for (var i = 0; i < data.length - 1; i += 2) {
+      var tr = $('<tr>')
+      table.append(tr)
+      var temp = data[i].kolor
+      if (temp == "blue") {
+        temp = "yellow"
+      } else {
+        temp = "red"
+      }
+      tr.append("<td style='color:" + temp + "'>" + data[i].name + "</td>");
+      tr.append("<td>" + data[i].ilosc + "</td>");
 
-}
+      var temp = data[i].status
+      if (temp == true) {
+        temp = "green"
+      } else {
+        temp = "black"
+      }
+
+      if (data[i].status) {
+        tr.append("<td style='color:" + temp + "'>WIN</td>");
+      } else {
+        tr.append("<td style='color:" + temp + "'>LOSE</td>");
+      }
+      //2 gracz
+      var temp = data[i + 1].kolor
+      if (temp == "blue") {
+        temp = "yellow"
+      } else {
+        temp = "red"
+      }
+      tr.append("<td>" + data[i + 1].data + "</td>");
+      tr.append("<td style='color:" + temp + "'>" + data[i + 1].name + "</td>");
+      tr.append("<td>" + data[i + 1].ilosc + "</td>");
+
+      var temp = data[i + 1].status
+      if (temp == true) {
+        temp = "green"
+      } else {
+        temp = "black"
+      }
+
+      if (data[i + 1].status) {
+        tr.append("<td style='color:" + temp + "'>WIN</td>");
+      } else {
+        tr.append("<td style='color:" + temp + "'>LOSE</td>");
+      }
+      tr.append("<td>" + data[i + 1].data + "</td>");
+
+    }
   })
 
 
@@ -356,7 +402,7 @@ tr.append("<td>"+data[i+1].data+"</td>");
 
 
       //  console.log(tempY, tempX);
-      chip.getChip().translateZ(settings.gravity*delta*100)
+      chip.getChip().translateZ(settings.gravity * delta * 100)
 
       if (tempY > 0) {
 
@@ -381,11 +427,20 @@ tr.append("<td>"+data[i+1].data+"</td>");
                 if (movingChipColor == "blue") {
                   chip.getChip().name = "R"
                   chip.getChip().material.color.setHex(0xff0000)
-                  $("#help").html("Ruch gracza: czerwony")
+                  if (_update) {
+                    $("#help").html("Ruch przeciwnika")
+                  } else {
+                    $("#help").html("Twoj Ruch")
+                  }
+
                 } else {
                   chip.getChip().name = "B"
                   chip.getChip().material.color.setHex(0xffff00)
-                      $("#help").html("Ruch gracza: żółty")
+                  if (_update) {
+                    $("#help").html("Ruch przeciwnika")
+                  } else {
+                    $("#help").html("Twoj Ruch")
+                  }
                 }
               scene.add(chip.getChip())
               if (CheckArray(tempY - 1, tempX)) {
@@ -404,7 +459,7 @@ tr.append("<td>"+data[i+1].data+"</td>");
                 console.log(data)
                 console.log("Mycolor", myColor)
                 console.log("Glowny", _color)
-                if (settings.tab_wall[tempY-1][tempX] == myColor) {
+                if (settings.tab_wall[tempY - 1][tempX] == myColor) {
                   client.emit("Wynik", {
                     status: true,
                     kolor: _color,
@@ -447,12 +502,20 @@ tr.append("<td>"+data[i+1].data+"</td>");
             if (movingChipColor == "blue") {
               chip.getChip().name = "R"
               chip.getChip().material.color.setHex(0xff0000)
-              $("#help").html("Ruch gracza: czerwony")
+              if(_update){
+                $("#help").html("Ruch przeciwnika")
+              }else{
+                $("#help").html("Twoj Ruch")
+              }
 
             } else {
               chip.getChip().name = "B"
               chip.getChip().material.color.setHex(0xffff00)
-              $("#help").html("Ruch gracza: żółty")
+              if(_update){
+                $("#help").html("Ruch przeciwnika")
+              }else{
+                $("#help").html("Twoj Ruch")
+              }
 
             }
           scene.add(chip.getChip())
@@ -472,10 +535,10 @@ tr.append("<td>"+data[i+1].data+"</td>");
             console.log(data)
             console.log("Mycolor", myColor)
             console.log("Glowny", _color)
-            if (settings.tab_wall[tempY-1][tempX] == myColor) {
+            if (settings.tab_wall[tempY - 1][tempX] == myColor) {
 
               client.emit("Wynik", {
-                status: false,
+                status: true,
                 kolor: _color,
                 id: _id,
                 name: _name,

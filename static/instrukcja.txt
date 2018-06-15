@@ -3,7 +3,7 @@ Instrukcja do gry
 Gra logiczna przeznaczona dla 2 graczy w wieku od 6 do 99+ lat.
 
 Warunki korzystania z gry:
-Gra Connect4 stworzona przez Bartosza Klinowskiego, oraz Jakuba Lalika została wykonana tylko i wyłącznie na zajęcia z Aplikacji Serwerowych i nie upoważnia nikogo, bez zgody twórców, do rozpowszechniania aplikacji i wykorzystywania jej do własnych celów. Gra w przyszłości będzie dopracowywana i zostanie udostępniona do użytku publicznego. 
+Gra Connect4 stworzona przez Bartosza Klinowskiego oraz Jakuba Lalika została wykonana tylko i wyłącznie na zajęcia z Aplikacji Serwerowych i nie upoważnia nikogo, bez zgody twórców, do rozpowszechniania aplikacji i wykorzystywania jej do własnych celów. Gra w przyszłości będzie dopracowywana i zostanie udostępniona do użytku publicznego. 
 W razie pytań proszę kontaktować się na maile: 
 bartoszklinowski@gmail.com 
 jakub.la1511@gmail.com  
